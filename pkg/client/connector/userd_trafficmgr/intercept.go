@@ -91,6 +91,7 @@ func (lpf livePortForwards) cancelUnwanted(ctx context.Context) {
 			lp.cancel()
 			delete(lpf.live, fk)
 			lp.wg.Wait()
+			dlog.Debugf(ctx, "Forwards for %s are gone", fk.PodIP)
 		}
 	}
 }
