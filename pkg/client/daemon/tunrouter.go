@@ -432,6 +432,7 @@ func (t *tunRouter) handlePacket(c context.Context, data *buffer.Data) {
 		}
 		dg := udp.DatagramFromData(ipHdr, data)
 		if blockedUDPPorts[dg.Header().SourcePort()] || blockedUDPPorts[dg.Header().DestinationPort()] {
+			dlog.Debugf(c, "Packet blocked because %d or %d is blocked", dg.Header().SourcePort(), dg.Header().DestinationPort())
 			t.toTunCh <- icmp.DestinationUnreachablePacket(ipHdr, icmp.PortUnreachable)
 			return
 		}
